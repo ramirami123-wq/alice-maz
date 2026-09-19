@@ -42,13 +42,13 @@
         "custom_liquid_TJV3Ri": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<section class=\"sale-timer\" aria-label=\"Sale countdown timer\">\n  <style>\n    .sale-timer{\n      width:100%;\n      padding:22px 12px;\n      display:flex;\n      justify-content:center;\n      background:##CB572A;\n      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;\n    }\n    .sale-timer__wrap{\n      text-align:center;\n    }\n    .sale-timer__label{\n      font-size:24px;\n      font-weight:500;\n      color:#111;\n      margin:0 0 14px 0;\n      line-height:1.1;\n    }\n\n    .sale-timer__row{\n      display:flex;\n      align-items:center;\n      justify-content:center;\n      gap:10px;\n    }\n\n    .sale-timer__box{\n      width:88px;\n      height:68px;\n      background:#c8ab8d;\n      color:#fff;\n      border-radius:6px;\n      display:flex;\n      align-items:center;\n      justify-content:center;\n      font-size:34px;\n      font-weight:700;\n      letter-spacing:1px;\n      font-variant-numeric: tabular-nums;\n    }\n\n    .sale-timer__colon{\n      font-size:32px;\n      font-weight:700;\n      color:#ff2a2a;\n      line-height:1;\n      transform: translateY(-1px);\n      user-select:none;\n    }\n\n    @media (max-width:420px){\n      .sale-timer__label{ font-size:20px; }\n      .sale-timer__box{ width:72px; height:58px; font-size:30px; }\n      .sale-timer__colon{ font-size:28px; }\n      .sale-timer__row{ gap:8px; }\n    }\n  </style>\n\n  <div class=\"sale-timer__wrap\">\n    <div class=\"sale-timer__label\">Hurry! Sale ends in</div>\n\n    <div class=\"sale-timer__row\" role=\"timer\" aria-live=\"polite\">\n      <div class=\"sale-timer__box\" id=\"st-hours\">00</div>\n      <div class=\"sale-timer__colon\">:</div>\n      <div class=\"sale-timer__box\" id=\"st-mins\">00</div>\n      <div class=\"sale-timer__colon\">:</div>\n      <div class=\"sale-timer__box\" id=\"st-secs\">00</div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      const durationHours = 12; // change if needed\n      const endAt = Date.now() + durationHours * 60 * 60 * 1000;\n\n      const h = document.getElementById(\"st-hours\");\n      const m = document.getElementById(\"st-mins\");\n      const s = document.getElementById(\"st-secs\");\n\n      const pad = n => String(n).padStart(2, \"0\");\n\n      function update(){\n        let diff = endAt - Date.now();\n        if(diff < 0) diff = 0;\n\n        const total = Math.floor(diff / 1000);\n        h.textContent = pad(Math.floor(total / 3600));\n        m.textContent = pad(Math.floor((total % 3600) / 60));\n        s.textContent = pad(total % 60);\n\n        if(diff === 0) clearInterval(timer);\n      }\n\n      update();\n      const timer = setInterval(update, 1000);\n    })();\n  </script>\n</section>"
+            "custom_liquid": "<style>\n  .unit-price {\n    display: none !important;\n  }\n</style>"
           }
         },
         "custom_liquid_H9DXEK": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<div style=\"padding: 12px; text-align: left; background-color: #f9f9f9; font-size: 15px; border-radius: 12px; margin-top: 10px; margin-bottom: 10px; line-height: 1.6;\">\n\n<span style=\"font-weight: bold;\">🧼 Deep Brush Cleaning</span> – Cleans your makeup brushes quickly and easily in just minutes.<br><br>\n\n<span style=\"font-weight: bold;\">💨 Fast Drying Function</span> – Includes 2H and 5H timer options to help dry brushes after cleaning.<br><br>\n\n<span style=\"font-weight: bold;\">💄 Fits Most Brush Sizes</span> – Flexible silicone holder works with different makeup brush sizes.<br><br>\n\n<span style=\"font-weight: bold;\">✨ Clean & Hygienic Brushes</span> – Helps keep your brushes fresh, ready to use, and more hygienic.\n\n</div>"
+            "custom_liquid": "<ul>\n  <li>🧲 <strong>No Glue Needed</strong> – Easy magnetic application without messy lash glue.</li>\n  <li>⏱️ <strong>Quick &amp; Easy</strong> – Apply your lashes in seconds.</li>\n  <li>♻️ <strong>Reusable</strong> – Designed for multiple wears with proper care.</li>\n  <li>💕 <strong>Natural Look</strong> – Lightweight lashes that blend beautifully with your natural lashes.</li>\n  <li>👁️ <strong>Comfortable Wear</strong> – Lightweight and comfortable throughout the day.</li>\n  <li>💧 <strong>Secure Hold</strong> – Magnetic design helps keep lashes firmly in place.</li>\n  <li>🎀 <strong>Perfect for Any Occasion</strong> – Ideal for everyday makeup, parties, dates, and special events.</li>\n  <li>💰 <strong>Save Money</strong> – Reusable design means you don't need a new pair for every look.</li>\n</ul>"
           }
         },
         "variant_picker": {
@@ -175,8 +175,8 @@
         "show_divider": false,
         "use_custom_colors": true,
         "colors_icon": "#ffffff",
-        "colors_text": "#FFFFFF",
-        "colors_background": "#C8AB8D",
+        "colors_text": "#ffffff",
+        "colors_background": "#c8ab8d",
         "gradient_background": "",
         "padding_top": 36,
         "padding_bottom": 36
@@ -222,6 +222,7 @@
         "mobile_text_alignment": "left",
         "mobile_image_ratio": "auto",
         "enable_video_looping": false,
+        "video_url": "",
         "use_custom_colors": false,
         "colors_button_label": "#ffffff",
         "colors_button_background": "#1a1b18",
@@ -257,8 +258,8 @@
         "show_divider": false,
         "use_custom_colors": true,
         "colors_icon": "#ffffff",
-        "colors_text": "#FFFFFF",
-        "colors_background": "#C8AB8D",
+        "colors_text": "#ffffff",
+        "colors_background": "#c8ab8d",
         "gradient_background": "",
         "padding_top": 36,
         "padding_bottom": 36
@@ -304,6 +305,7 @@
         "mobile_text_alignment": "left",
         "mobile_image_ratio": "auto",
         "enable_video_looping": false,
+        "video_url": "",
         "use_custom_colors": false,
         "colors_button_label": "#ffffff",
         "colors_button_background": "#1a1b18",
@@ -414,6 +416,10 @@
     "1771850465e38b72c3": {
       "type": "_blocks",
       "settings": {}
+    },
+    "1789834964bedc9ec0": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -428,6 +434,7 @@
     "custom_liquid_j7r4rM",
     "1771945068374140eb",
     "guarantees_Yj7NaV",
-    "1771850465e38b72c3"
+    "1771850465e38b72c3",
+    "1789834964bedc9ec0"
   ]
 }
