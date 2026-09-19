@@ -45,12 +45,6 @@
             "custom_liquid": "<style>\n  .unit-price {\n    display: none !important;\n  }\n</style>"
           }
         },
-        "custom_liquid_H9DXEK": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<ul>\n  <li>⚡ Deep Cleans in Seconds – Removes makeup, dirt, and product buildup quickly.</li>\n  <li>💨 Cleans &amp; Dries – Washes and dries your brushes in one convenient device.</li>\n  <li>🧴 Gentle on Brushes – Helps keep bristles soft and in good condition.</li>\n  <li>🦠 More Hygienic – Regular cleaning helps reduce buildup of bacteria and residue.</li>\n  <li>⏱️ Fast &amp; Convenient – Saves time compared with traditional hand washing.</li>\n  <li>🖌️ Works with Multiple Brushes – Suitable for a variety of makeup brush sizes.</li>\n  <li>💦 Easy to Use – Simple operation for effortless everyday cleaning.</li>\n  <li>✨ Fresh &amp; Ready to Use – Get cleaner, fresher brushes ready for your next makeup look.</li>\n</ul>"
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -97,7 +91,6 @@
         "rating",
         "price",
         "custom_liquid_TJV3Ri",
-        "custom_liquid_H9DXEK",
         "variant_picker",
         "buy_buttons",
         "custom_liquid_wbDEGx",
