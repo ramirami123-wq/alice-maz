@@ -1,6 +1,165 @@
+{% doc %}
+  @prompt
+    Add a countdown timer block that appears below the product price on the product page. The timer should count down to a specific date/time that can be customized in theme settings. It should display days, hours, minutes, and seconds with a clean, attractive design that matches the store's style. The timer should show an urgency message like "Sale ends in:" above the countdown. Do not remove or modify the existing price block.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-countdown-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin-top: {{ block.settings.top_spacing }}px;
+    margin-bottom: {{ block.settings.bottom_spacing }}px;
+    padding: 18px 20px;
+    background: {{ block.settings.background_color }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    color: {{ block.settings.text_color }};
+    text-align: {{ block.settings.alignment }};
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__message {
+    margin: 0 0 14px;
+    color: {{ block.settings.message_color }};
+    font-family: {{ block.settings.heading_font.family }};
+    font-size: {{ block.settings.message_size }}px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__units {
+    display: flex;
+    justify-content: {% if block.settings.alignment == 'center' %}center{% elsif block.settings.alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__unit {
+    min-width: 62px;
+    padding: 10px 8px 8px;
+    background: {{ block.settings.unit_background_color }};
+    border-radius: {{ block.settings.unit_radius }}px;
+    text-align: center;
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__number {
+    display: block;
+    color: {{ block.settings.number_color }};
+    font-family: {{ block.settings.heading_font.family }};
+    font-size: {{ block.settings.number_size }}px;
+    font-weight: 600;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__label {
+    display: block;
+    margin-top: 5px;
+    color: {{ block.settings.label_color }};
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ai-countdown-{{ ai_gen_id }}__ended {
+    margin: 0;
+    color: {{ block.settings.message_color }};
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-countdown-{{ ai_gen_id }} { padding: 16px; }
+    .ai-countdown-{{ ai_gen_id }}__unit { min-width: 56px; }
+  }
+{% endstyle %}
+
+<countdown-timer-{{ ai_gen_id }}
+  class="ai-countdown-{{ ai_gen_id }}"
+  data-end-date="{{ block.settings.end_date | escape }}"
+  {{ block.shopify_attributes }}
+>
+  <p class="ai-countdown-{{ ai_gen_id }}__message">{{ block.settings.message }}</p>
+  <div class="ai-countdown-{{ ai_gen_id }}__units" aria-label="{{ block.settings.message }}">
+    <div class="ai-countdown-{{ ai_gen_id }}__unit"><span class="ai-countdown-{{ ai_gen_id }}__number" data-days>00</span><span class="ai-countdown-{{ ai_gen_id }}__label">Days</span></div>
+    <div class="ai-countdown-{{ ai_gen_id }}__unit"><span class="ai-countdown-{{ ai_gen_id }}__number" data-hours>00</span><span class="ai-countdown-{{ ai_gen_id }}__label">Hours</span></div>
+    <div class="ai-countdown-{{ ai_gen_id }}__unit"><span class="ai-countdown-{{ ai_gen_id }}__number" data-minutes>00</span><span class="ai-countdown-{{ ai_gen_id }}__label">Minutes</span></div>
+    <div class="ai-countdown-{{ ai_gen_id }}__unit"><span class="ai-countdown-{{ ai_gen_id }}__number" data-seconds>00</span><span class="ai-countdown-{{ ai_gen_id }}__label">Seconds</span></div>
+  </div>
+  <p class="ai-countdown-{{ ai_gen_id }}__ended" hidden>{{ block.settings.ended_message }}</p>
+</countdown-timer-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CountdownTimer{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.endDate = this.dataset.endDate;
+        this.days = this.querySelector('[data-days]');
+        this.hours = this.querySelector('[data-hours]');
+        this.minutes = this.querySelector('[data-minutes]');
+        this.seconds = this.querySelector('[data-seconds]');
+        this.ended = this.querySelector('.ai-countdown-{{ ai_gen_id }}__ended');
+        this.update();
+        this.interval = setInterval(() => this.update(), 1000);
+      }
+
+      disconnectedCallback() {
+        clearInterval(this.interval);
+      }
+
+      update() {
+        const target = new Date(this.endDate.replace(' ', 'T')).getTime();
+        const difference = target - Date.now();
+        if (!this.endDate || Number.isNaN(target) || difference <= 0) {
+          this.querySelector('.ai-countdown-{{ ai_gen_id }}__units').hidden = true;
+          this.ended.hidden = false;
+          clearInterval(this.interval);
+          return;
+        }
+        const totalSeconds = Math.floor(difference / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        this.days.textContent = String(days).padStart(2, '0');
+        this.hours.textContent = String(hours).padStart(2, '0');
+        this.minutes.textContent = String(minutes).padStart(2, '0');
+        this.seconds.textContent = String(seconds).padStart(2, '0');
+      }
+    }
+    customElements.define('countdown-timer-{{ ai_gen_id }}', CountdownTimer{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Countdown timer",
+  "tag": null,
+  "class": "countdown-timer-block",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "message", "label": "Message", "default": "Sale ends in:" },
+    { "type": "text", "id": "end_date", "label": "End date and time", "default": "2026-12-31 23:59:59" },
+    { "type": "text", "id": "ended_message", "label": "Ended message", "default": "This offer has ended." },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "select", "id": "alignment", "label": "Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "range", "id": "top_spacing", "label": "Top spacing", "min": 0, "max": 40, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "bottom_spacing", "label": "Bottom spacing", "min": 0, "max": 40, "step": 4, "unit": "px", "default": 16 },
+    { "type": "header", "content": "Style" },
+    { "type": "font_picker", "id": "heading_font", "label": "Display font", "default": "gill_sans_nova_n4" },
+    { "type": "range", "id": "message_size", "label": "Message size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "number_size", "label": "Number size", "min": 18, "max": 44, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "border_radius", "label": "Border radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "unit_radius", "label": "Unit radius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 6 },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#d2d5d9" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#212326" },
+    { "type": "color", "id": "message_color", "label": "Message", "default": "#1a1b18" },
+    { "type": "color", "id": "unit_background_color", "label": "Unit background", "default": "#f3f3f3" },
+    { "type": "color", "id": "number_color", "label": "Numbers", "default": "#1a1b18" },
+    { "type": "color", "id": "label_color", "label": "Labels", "default": "#212326" }
+  ],
+  "presets": [ { "name": "Countdown timer" } ]
+}
 {% endschema %}
